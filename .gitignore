@@ -9,4 +9,9 @@ obj/
 *.db-wal
 artifacts/
 publish/
-
+.gradle/
+.idea/
+**/build/
+android/local.properties
+android/.kotlin/
+.tools/

@@ -125,16 +125,22 @@ public partial class CardWindow : Window
     {
         _expandedLeft = Left;
         var target = _dockSide == DockSide.Left ? SystemParameters.WorkArea.Left - Width + 22 : SystemParameters.WorkArea.Right - 22;
-        BeginAnimation(LeftProperty, new DoubleAnimation(target, TimeSpan.FromMilliseconds(180)) { EasingFunction = new QuadraticEase() });
         _collapsed = true;
+        BeginAnimation(LeftProperty, new DoubleAnimation(target, TimeSpan.FromMilliseconds(180)) { EasingFunction = new QuadraticEase() });
     }
 
     private void ExpandFromEdge()
     {
         _collapseTimer.Stop();
         if (!_collapsed) return;
-        BeginAnimation(LeftProperty, new DoubleAnimation(_expandedLeft, TimeSpan.FromMilliseconds(180)) { EasingFunction = new QuadraticEase() });
-        _collapsed = false;
+        var animation = new DoubleAnimation(_expandedLeft, TimeSpan.FromMilliseconds(180)) { EasingFunction = new QuadraticEase() };
+        animation.Completed += (_, _) =>
+        {
+            BeginAnimation(LeftProperty, null);
+            Left = _expandedLeft;
+            _collapsed = false;
+        };
+        BeginAnimation(LeftProperty, animation);
     }
 
     private void ScheduleGeometrySave()

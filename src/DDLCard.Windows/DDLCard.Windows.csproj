@@ -12,6 +12,10 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
+    <Version>0.1.0</Version>
+    <AssemblyName>DDLCard</AssemblyName>
+    <Product>DDLCard</Product>
+    <Description>Local-first visual deadline dashboard for Windows.</Description>
   </PropertyGroup>
 
 </Project>

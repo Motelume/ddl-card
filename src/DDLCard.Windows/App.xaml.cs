@@ -17,6 +17,10 @@ public partial class App : System.Windows.Application
         base.OnStartup(e);
         Services = new AppServices();
         await Services.InitializeAsync();
+        if (Services.Settings.StartWithWindows)
+        {
+            try { StartupService.SetEnabled(true); } catch { /* The setting page can retry with a visible error. */ }
+        }
         MainManagerWindow = new MainWindow();
         DesktopCardWindow = new CardWindow();
         Tray = new TrayService(this);

@@ -9,6 +9,11 @@ public static class StartupService
 
     public static void SetEnabled(bool enabled)
     {
+        if (AppContext.BaseDirectory.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}", StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
         using var key = Registry.CurrentUser.OpenSubKey(RunKeyPath, writable: true)
             ?? throw new InvalidOperationException("无法打开 Windows 启动项设置。");
         if (!enabled)
@@ -21,4 +26,3 @@ public static class StartupService
         key.SetValue(ValueName, $"\"{processPath}\"");
     }
 }
-
