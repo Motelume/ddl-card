@@ -55,6 +55,27 @@ public sealed class PersistenceTests
         }
     }
 
+    [Fact]
+    public async Task ReminderDeliveryStore_DeduplicatesByTaskDueTimeAndOffset()
+    {
+        var root = CreateTemporaryRoot();
+        try
+        {
+            var store = new SqliteReminderDeliveryStore(new AppDataPaths(root));
+            var taskId = Guid.NewGuid();
+            var due = DateTimeOffset.UtcNow.AddHours(1);
+
+            Assert.False(await store.WasDeliveredAsync(taskId, due, 60));
+            await store.MarkDeliveredAsync(taskId, due, 60, DateTimeOffset.UtcNow);
+            Assert.True(await store.WasDeliveredAsync(taskId, due, 60));
+            Assert.False(await store.WasDeliveredAsync(taskId, due.AddHours(1), 60));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
     private static string CreateTemporaryRoot()
     {
         var path = Path.Combine(Path.GetTempPath(), "ddlcard-tests", Guid.NewGuid().ToString("N"));

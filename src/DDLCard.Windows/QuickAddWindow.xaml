@@ -1,0 +1,23 @@
+<Window x:Class="DDLCard.Windows.QuickAddWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="快速添加" Width="520" Height="285" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True">
+    <Grid Margin="26">
+        <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
+        <TextBlock Text="快速添加 DDL" FontSize="24" FontWeight="Bold" />
+        <TextBox x:Name="TitleBox" Grid.Row="1" Margin="0,18,0,14" FontSize="17" KeyDown="TitleBox_KeyDown" />
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition Width="130" /><ColumnDefinition Width="130" /></Grid.ColumnDefinitions>
+            <DatePicker x:Name="DueDatePicker" />
+            <TextBox x:Name="DueTimeBox" Grid.Column="1" Margin="10,0" />
+            <ComboBox x:Name="PriorityBox" Grid.Column="2" SelectedIndex="1">
+                <ComboBoxItem Content="低" /><ComboBoxItem Content="普通" /><ComboBoxItem Content="高" /><ComboBoxItem Content="紧急" />
+            </ComboBox>
+        </Grid>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button Content="取消" Click="Cancel_Click" Margin="0,0,10,0" />
+            <Button Content="添加" Click="Save_Click" Background="{StaticResource AccentBrush}" MinWidth="88" />
+        </StackPanel>
+    </Grid>
+</Window>
+

@@ -1,0 +1,52 @@
+<Window x:Class="DDLCard.Windows.TaskEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="编辑截止事项" Width="620" Height="760" MinWidth="560" MinHeight="650"
+        WindowStartupLocation="CenterOwner" ResizeMode="CanResize">
+    <Grid Margin="28">
+        <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="*" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
+        <TextBlock x:Name="Heading" Text="新建截止事项" FontSize="27" FontWeight="Bold" />
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,22,0,22">
+            <StackPanel>
+                <TextBlock Text="标题 *" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,6" />
+                <TextBox x:Name="TitleBox" FontSize="17" />
+                <TextBlock Text="备注" Foreground="{StaticResource MutedTextBrush}" Margin="0,16,0,6" />
+                <TextBox x:Name="DescriptionBox" Height="90" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                <Grid Margin="0,16,0,0">
+                    <Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition /><ColumnDefinition /></Grid.ColumnDefinitions>
+                    <StackPanel Margin="0,0,10,0">
+                        <TextBlock Text="截止日期" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,6" />
+                        <DatePicker x:Name="DueDatePicker" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                        <TextBlock Text="时间（HH:mm）" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,6" />
+                        <TextBox x:Name="DueTimeBox" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="优先级" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,6" />
+                        <ComboBox x:Name="PriorityBox" SelectedIndex="1">
+                            <ComboBoxItem Content="低" /><ComboBoxItem Content="普通" /><ComboBoxItem Content="高" /><ComboBoxItem Content="紧急" />
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+                <TextBlock Text="分类" Foreground="{StaticResource MutedTextBrush}" Margin="0,16,0,6" />
+                <TextBox x:Name="CategoryBox" />
+                <TextBlock Text="子任务（每行一个；行首 [x] 表示完成）" Foreground="{StaticResource MutedTextBrush}" Margin="0,16,0,6" />
+                <TextBox x:Name="SubtasksBox" Height="100" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                <TextBlock Text="无子任务时的手动进度" Foreground="{StaticResource MutedTextBrush}" Margin="0,16,0,6" />
+                <DockPanel>
+                    <TextBlock x:Name="ProgressText" DockPanel.Dock="Right" Width="48" Text="0%" TextAlignment="Right" VerticalAlignment="Center" />
+                    <Slider x:Name="ProgressSlider" Minimum="0" Maximum="100" TickFrequency="5" IsSnapToTickEnabled="True" ValueChanged="ProgressSlider_ValueChanged" />
+                </DockPanel>
+                <TextBlock Text="提醒点（逗号分隔，支持 d/h/m）" Foreground="{StaticResource MutedTextBrush}" Margin="0,16,0,6" />
+                <TextBox x:Name="RemindersBox" Text="7d, 3d, 24h, 1h, 10m" />
+                <TextBlock Text="示例：7d 表示提前 7 天；30m 表示提前 30 分钟。" Foreground="{StaticResource MutedTextBrush}" FontSize="11" Margin="0,5,0,0" />
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="取消" Click="Cancel_Click" Margin="0,0,10,0" />
+            <Button Content="保存" Click="Save_Click" Background="{StaticResource AccentBrush}" MinWidth="92" />
+        </StackPanel>
+    </Grid>
+</Window>
+
