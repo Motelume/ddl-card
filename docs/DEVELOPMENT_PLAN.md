@@ -2,7 +2,7 @@
 
 ## Product decisions
 
-- Windows 11 first; Android/ColorOS 16 second; wallpaper mode after Android.
+- Windows 11 and Android/ColorOS 16 are delivered as separate local applications. A generated-wallpaper mode is deferred because the interactive card/widget solves the visibility problem without replacing the user's wallpaper.
 - Local-first and offline. No accounts, server or automatic device sync.
 - One responsive card per device. It shows as many tasks as fit and sorts active tasks by due time.
 - Countdown format is `days + hours + minutes`; days are omitted below one day and seconds are never shown.
@@ -20,8 +20,8 @@
 4. **Desktop card:** responsive rows, countdown refresh, drag/resize, desktop/topmost modes and edge collapse.
 5. **Background behavior:** tray icon, global quick-add shortcut, reminders and startup registration.
 6. **Windows release:** automated tests, smoke test checklist and self-contained package.
-7. **Android:** Kotlin/Compose app, Room persistence, fixed 4x4 and 4x6 Glance widgets, notification onboarding.
-8. **Wallpaper:** renderer interface implementations for Windows and Android after both card surfaces are stable.
+7. **Android:** Kotlin/Compose app, native SQLite persistence, fixed 4x4 and 4x6 Glance widgets, notification onboarding, preset codes and manual JSON backup.
+8. **Future options:** signed production releases and an optional generated-wallpaper renderer after real-world use validates the card surfaces.
 
 ## Definition of done for Windows MVP
 
@@ -33,3 +33,11 @@
 - Corrupt imports and preset codes are rejected without overwriting current data.
 - Core and persistence tests pass; a self-contained Windows x64 build launches on Windows 11.
 
+## Definition of done for Android MVP
+
+- The APK installs on Android 12 or newer, including ColorOS 16 devices.
+- Tasks can be created, edited, completed and postponed without network access.
+- 4x4 and 4x6 widgets show the nearest deadlines and support quick completion.
+- Notification and exact-alarm onboarding is visible, and alarms are restored after reboot.
+- Preset codes interoperate with Windows reminder defaults; JSON backups can be previewed and restored.
+- Unit tests and a clean debug APK build pass on JDK 17 with Android SDK 36.

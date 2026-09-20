@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Restore
+        run: dotnet restore DDLCard.slnx
+      - name: Test
+        run: dotnet test DDLCard.slnx --configuration Release --no-restore
+      - name: Publish Windows x64
+        run: dotnet publish src/DDLCard.Windows/DDLCard.Windows.csproj --configuration Release --runtime win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true --output artifacts/windows-x64
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DDLCard-Windows-x64
+          path: artifacts/windows-x64
+
+  test-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Install Android SDK 36
+        run: sdkmanager "platforms;android-36" "build-tools;36.0.0"
+      - name: Test and build APK
+        working-directory: android
+        run: ./gradlew testDebugUnitTest assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DDLCard-Android-debug
+          path: android/app/build/outputs/apk/debug/app-debug.apk
