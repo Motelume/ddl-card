@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DDLCard.Core/DDLCard.Core.csproj" />
+    <Project Path="src/DDLCard.Infrastructure/DDLCard.Infrastructure.csproj" />
+    <Project Path="src/DDLCard.Windows/DDLCard.Windows.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DDLCard.Tests/DDLCard.Tests.csproj" />
+  </Folder>
+</Solution>
